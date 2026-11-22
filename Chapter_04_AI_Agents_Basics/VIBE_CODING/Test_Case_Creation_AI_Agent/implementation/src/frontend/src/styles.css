@@ -1,0 +1,42 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; background: #0d1b2a; color: #fff; }
+.nav h1 { font-size: 1.2rem; }
+.nav a { color: #ccc; text-decoration: none; margin-left: 16px; padding: 4px 12px; border-radius: 4px; }
+.nav a.active { color: #fff; background: #1b2a4a; }
+
+.container { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+
+.card { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.card h2 { margin-bottom: 16px; font-size: 1.1rem; }
+
+.input-row { display: flex; gap: 8px; }
+.input-row input { flex: 1; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+.input-row input:focus { outline: none; border-color: #e63946; }
+
+button { padding: 10px 20px; border: none; border-radius: 6px; font-size: .9rem; cursor: pointer; background: #e63946; color: #fff; }
+button:hover { background: #c1121f; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-sm { padding: 6px 14px; font-size: .85rem; }
+.btn-success { background: #2d6a4f; }
+.btn-success:hover { background: #245a40; }
+
+.error { color: #c1121f; margin-top: 8px; padding: 10px; background: #fde8e8; border-radius: 6px; }
+.success { color: #2d6a4f; margin-top: 8px; padding: 10px; background: #d8f3dc; border-radius: 6px; }
+.loading { text-align: center; padding: 32px; color: #666; }
+
+.test-cases { white-space: pre-wrap; line-height: 1.6; font-size: .95rem; }
+.test-cases h1, .test-cases h2, .test-cases h3 { margin-top: 16px; }
+.test-cases table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.test-cases th, .test-cases td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; font-size: .85rem; }
+.test-cases th { background: #f0f0f0; }
+
+.settings-section { margin-bottom: 20px; }
+.settings-section h3 { margin-bottom: 12px; color: #0d1b2a; }
+.field { margin-bottom: 10px; }
+.field label { display: block; font-size: .85rem; color: #666; margin-bottom: 4px; }
+.field input { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: .9rem; }
+.field input:disabled { background: #f5f5f5; }
+.test-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
