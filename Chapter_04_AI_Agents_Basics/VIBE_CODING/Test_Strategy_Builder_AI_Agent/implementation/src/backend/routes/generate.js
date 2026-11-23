@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
   try {
     const { projectData } = req.body;
     if (!projectData || !projectData.key) {
-      return res.status(400).json({ error: "Missing project data." });
+      return res.status(400).json({ error: "Missing Jira data." });
     }
 
     const provider = (process.env.LLM_PROVIDER || "groq").toLowerCase();
@@ -32,32 +32,55 @@ router.post("/", async (req, res) => {
   }
 });
 
-function buildPrompt(proj) {
-  return `You are a senior QA lead. Generate a comprehensive test strategy for the following Jira project using EXACTLY the template structure below.
+function buildPrompt(data) {
+  if (data.isTicket) {
+    return `You are a senior QA lead. Generate a comprehensive test strategy for the following Jira Ticket/Epic using EXACTLY the template structure below.
 
-PROJECT DATA:
-- Key: ${proj.key}
-- Name: ${proj.name}
-- Lead: ${proj.lead || "Insufficient information to determine."}
-- Description: ${proj.description || "Insufficient information to determine."}
-- Total Issues: ${proj.issueCount}
-- Issue Types: ${JSON.stringify(proj.typeCounts)}
-- Priority Distribution: ${JSON.stringify(proj.priorityCounts)}
-- Status Distribution: ${JSON.stringify(proj.statusCounts)}
-- Components: ${(proj.components || []).join(", ") || "None"}
-- High Priority Issues: ${(proj.highPriorityIssues || []).map(i => `${i.key}: ${i.summary} (${i.priority})`).join("; ") || "None"}
+JIRA TICKET DATA:
+- Key: ${data.key}
+- Summary: ${data.summary}
+- Type: ${data.issueType}
+- Priority: ${data.priority}
+- Status: ${data.status}
+- Components: ${(data.components || []).join(", ") || "None"}
+- Labels: ${(data.labels || []).join(", ") || "None"}
+- Description: ${data.description || "Insufficient information to determine."}
+- Acceptance Criteria: ${data.acceptanceCriteria || "Insufficient information to determine."}
+- Subtasks: ${(data.subtasks || []).join("; ") || "None"}
+- Linked Issues: ${(data.linkedIssues || []).join("; ") || "None"}
 
 TEMPLATE (use this exact structure):
 ${TEMPLATE}
 
 RULES:
-- Fill each section based ONLY on the project data above.
+- Generate a test strategy centered around this ticket/feature/epic.
 - If information is missing for a section, write: "Insufficient information to determine."
 - If you infer something, label it: "Inference (low confidence)"
-- Do NOT invent requirements, features, or tools not derivable from the project data.
-- Replace <PROJECT-KEY> with ${proj.key} and <project name> with ${proj.name}.
-- Base risk analysis on the priority distribution and high-priority issues.
-- Propose test levels, automation approach, and tooling as recommendations, not confirmed decisions.`;
+- Do NOT invent requirements or tools not in the data.
+- Replace <PROJECT-KEY> with ${data.key} and <project name> with ${data.summary}.`;
+  }
+
+  return `You are a senior QA lead. Generate a comprehensive test strategy for the following Jira project using EXACTLY the template structure below.
+
+PROJECT DATA:
+- Key: ${data.key}
+- Name: ${data.name}
+- Lead: ${data.lead || "Insufficient information to determine."}
+- Description: ${data.description || "Insufficient information to determine."}
+- Total Issues: ${data.issueCount}
+- Issue Types: ${JSON.stringify(data.typeCounts)}
+- Priority Distribution: ${JSON.stringify(data.priorityCounts)}
+- Status Distribution: ${JSON.stringify(data.statusCounts)}
+- Components: ${(data.components || []).join(", ") || "None"}
+- High Priority Issues: ${(data.highPriorityIssues || []).map(i => `${i.key}: ${i.summary} (${i.priority})`).join("; ") || "None"}
+
+TEMPLATE (use this exact structure):
+${TEMPLATE}
+
+RULES:
+- If information is missing for a section, write: "Insufficient information to determine."
+- If you infer something, label it: "Inference (low confidence)"
+- Replace <PROJECT-KEY> with ${data.key} and <project name> with ${data.name}.`;
 }
 
 async function generateWithGroq(prompt) {
