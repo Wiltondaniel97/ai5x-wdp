@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { marked } from "marked";
+
+marked.setOptions({ breaks: true });
 
 export default function MainPage() {
   const [issueId, setIssueId] = useState("");
@@ -15,13 +17,11 @@ export default function MainPage() {
     setError(""); setTestPlan(""); setLoading(true);
 
     try {
-      // 1. Fetch Jira issue
       const jiraRes = await fetch(`/api/jira/issue/${encodeURIComponent(id)}`);
       const jiraData = await jiraRes.json();
       if (!jiraRes.ok) throw new Error(jiraData.error || "Failed to fetch Jira issue.");
       setJiraKey(jiraData.key);
 
-      // 2. Generate test plan
       const genRes = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,9 +64,10 @@ export default function MainPage() {
           <p style={{ fontSize: ".8rem", color: "#666", marginBottom: 12 }}>
             Source: <strong>{jiraKey}</strong>
           </p>
-          <div className="test-plan">
-            <ReactMarkdown>{testPlan}</ReactMarkdown>
-          </div>
+          <div
+            className="md-output"
+            dangerouslySetInnerHTML={{ __html: marked(testPlan) }}
+          />
         </div>
       )}
     </>

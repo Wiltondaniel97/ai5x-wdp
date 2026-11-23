@@ -27,11 +27,25 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 .success { color: #2d6a4f; margin-top: 8px; padding: 10px; background: #d8f3dc; border-radius: 6px; }
 .loading { text-align: center; padding: 32px; color: #666; }
 
-.test-cases { white-space: pre-wrap; line-height: 1.6; font-size: .95rem; }
-.test-cases h1, .test-cases h2, .test-cases h3 { margin-top: 16px; }
-.test-cases table { width: 100%; border-collapse: collapse; margin: 8px 0; }
-.test-cases th, .test-cases td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; font-size: .85rem; }
-.test-cases th { background: #f0f0f0; }
+/* Markdown output styles */
+.md-output { line-height: 1.7; font-size: .95rem; color: #222; }
+.md-output h1 { font-size: 1.5rem; margin: 20px 0 10px; border-bottom: 2px solid #e63946; padding-bottom: 6px; }
+.md-output h2 { font-size: 1.2rem; margin: 18px 0 8px; color: #0d1b2a; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+.md-output h3 { font-size: 1rem; margin: 14px 0 6px; color: #333; }
+.md-output p { margin: 8px 0; }
+.md-output ul, .md-output ol { margin: 8px 0 8px 24px; }
+.md-output li { margin: 4px 0; }
+.md-output strong { font-weight: 600; }
+.md-output em { font-style: italic; }
+.md-output code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: .88rem; }
+.md-output pre { background: #f6f8fa; border: 1px solid #ddd; border-radius: 6px; padding: 12px; overflow-x: auto; margin: 10px 0; }
+.md-output pre code { background: none; padding: 0; }
+.md-output blockquote { border-left: 4px solid #e63946; padding: 8px 16px; margin: 10px 0; background: #fff8f8; color: #555; }
+.md-output table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .88rem; }
+.md-output th { background: #e63946; color: #fff; padding: 8px 12px; text-align: left; }
+.md-output td { border: 1px solid #ddd; padding: 7px 12px; }
+.md-output tr:nth-child(even) td { background: #f9f9f9; }
+.md-output hr { border: none; border-top: 1px solid #ddd; margin: 16px 0; }
 
 .settings-section { margin-bottom: 20px; }
 .settings-section h3 { margin-bottom: 12px; color: #0d1b2a; }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { marked } from "marked";
+
+marked.setOptions({ breaks: true });
 
 export default function MainPage() {
   const [issueId, setIssueId] = useState("");
@@ -62,9 +64,10 @@ export default function MainPage() {
           <p style={{ fontSize: ".8rem", color: "#666", marginBottom: 12 }}>
             Source: <strong>{jiraKey}</strong>
           </p>
-          <div className="test-cases">
-            <ReactMarkdown>{testCases}</ReactMarkdown>
-          </div>
+          <div
+            className="md-output"
+            dangerouslySetInnerHTML={{ __html: marked(testCases) }}
+          />
         </div>
       )}
     </>
