@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "npx concurrently \"npm run server\" \"npm run client\"",
     "server": "node src/backend/server.js",
-    "client": "cd src/frontend && npx vite --port 5175"
+    "client": "cd src/frontend && npx vite --port 5175",
+    "build": "cd src/frontend && npx vite build"
   },
   "dependencies": {
     "axios": "^1.7.0",

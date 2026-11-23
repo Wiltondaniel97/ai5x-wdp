@@ -5,8 +5,14 @@ const fs = require("fs");
 const path = require("path");
 const router = express.Router();
 
-const templatePath = path.resolve(__dirname, "../../../../plan/test-plan-template.md");
-const TEMPLATE = fs.existsSync(templatePath) ? fs.readFileSync(templatePath, "utf-8") : "";
+const localTemplatePath = path.resolve(__dirname, "../templates/test-plan-template.md");
+const planTemplatePath = path.resolve(__dirname, "../../../../plan/test-plan-template.md");
+let TEMPLATE = "";
+if (fs.existsSync(localTemplatePath)) {
+  TEMPLATE = fs.readFileSync(localTemplatePath, "utf-8");
+} else if (fs.existsSync(planTemplatePath)) {
+  TEMPLATE = fs.readFileSync(planTemplatePath, "utf-8");
+}
 
 // POST /api/generate
 router.post("/", async (req, res) => {
